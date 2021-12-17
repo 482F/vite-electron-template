@@ -1,0 +1,49 @@
+{
+  "name": "vite-electron-template",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "cmd.exe /c yarn run npm-run-all makedir:dist filecopy:* background:build --parallel vite:dev --race electron:start",
+    "build": "cmd.exe /c yarn run run-s clean vite:build filecopy:preload background:build electron:build",
+    "build:mac": "run-s clean vite:build electron:macbuild",
+    "background:build": "rollup --config rollup.config.js",
+    "vite:dev": "vite",
+    "vite:build": "vite build",
+    "vite:serve": "vite preview",
+    "vite:prdbuild": "vite build --config vite.config.prd.js",
+    "electron:start": "set NODE_ENV=development && electron .",
+    "electron:build": "set NODE_ENV=production && electron-builder --win --x64 --dir",
+    "electron:macbuild": "set NODE_ENV=production && electron-builder --mac --dir",
+    "makedir:dist": "node -e \"require('fs').mkdirSync('./dist', { recursive: true })",
+    "filecopy:preload": "node -e \"require('fs').copyFileSync('./preload.js', './dist/preload.js')\"",
+    "clean": "rimraf dist"
+  },
+  "main": "dist/background.js",
+  "dependencies": {
+    "@mdi/font": "5.9.55",
+    "npm-run-all": "^4.1.5",
+    "roboto-fontface": "*",
+    "vue": "^3.2.25",
+    "vuetify": "^3.0.0-alpha.0",
+    "webfontloader": "^1.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.0.0",
+    "@vue/cli-plugin-babel": "5.0.0-beta.7",
+    "@vue/cli-service": "5.0.0-beta.7",
+    "@vuetify/vite-plugin": "^1.0.0-alpha.3",
+    "electron": "^16.0.5",
+    "electron-builder": "^22.14.5",
+    "electron-devtools-installer": "^3.2.0",
+    "sass": "^1.38.0",
+    "sass-loader": "^10.0.0",
+    "vite": "^2.7.2",
+    "vue-cli-plugin-vuetify": "~2.4.5",
+    "vuetify-loader": "^2.0.0-alpha.0"
+  },
+  "build": {
+    "productName": "AppName",
+    "files": [
+      "dist/**/*"
+    ]
+  }
+}
