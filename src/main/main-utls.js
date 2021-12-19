@@ -1,12 +1,16 @@
-import { BrowserWindow, Menu } from 'electron'
+import { BrowserWindow, Menu, MenuItem, ipcMain } from 'electron'
 import path from 'path'
 
 const utls = {}
 utls.isDevelopment = ('' + process.env.NODE_ENV).trim() === 'development'
-utls.createWindow = async (options, menu, hash) => {
+utls.createWindow = async (options, rawMenuItems, hash) => {
   options.webPreferences ??= {}
   options.webPreferences.preload = path.join(__dirname, 'preload.js')
   const win = new BrowserWindow(options)
+  const menuItems = rawMenuItems.map((rawMenuItem) => new MenuItem(rawMenuItem))
+  const menu = new Menu()
+  menuItems.forEach((menuItem) => menu.append(menuItem))
+
   win.setMenu(null)
   Menu.setApplicationMenu(menu)
 
