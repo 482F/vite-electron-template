@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, Menu, MenuItem } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import utls from './main-utls.js'
 
 async function main() {
@@ -8,7 +8,6 @@ async function main() {
     app.quit()
     return
   }
-
 
   const appHandlers = {
     'activate': () => {
@@ -38,7 +37,8 @@ async function main() {
     },
     'second-instance': (_, rawArgs) => {
       // Windows 限定・・・
-      const args = rawArgs?.[0] === 'electron.exe' ? rawArgs.slice(3) : rawArgs.slice(2)
+      const args =
+        rawArgs?.[0] === 'electron.exe' ? rawArgs.slice(3) : rawArgs.slice(2)
       console.log(args)
     },
   }
@@ -71,10 +71,11 @@ async function main() {
 
   const ipcHandlers = {
     minimize: () => win.minimize(),
-    close: () => app.quit(),
+    quit: () => app.quit(),
+    createWindow: utls.createWindow,
   }
   Object.entries(ipcHandlers).forEach(([eventName, handler]) =>
-    ipcMain.handle(eventName, handler)
+    utls.listenIpc('main', eventName, handler)
   )
 
   // Exit cleanly on request from parent process in development mode.
