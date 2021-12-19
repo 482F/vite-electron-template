@@ -22,10 +22,10 @@ export default {
   name: 'titlebar',
   methods: {
     minimize() {
-      this.$ipcInvoke('minimize')
+      this.$ipcSend('main', 'minimize')
     },
     close() {
-      this.$ipcInvoke('close')
+      window.close()
     },
   },
 }
