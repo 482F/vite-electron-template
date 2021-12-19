@@ -26,7 +26,9 @@ utls.createWindow = async (options, rawMenuItems, hash) => {
 }
 
 utls.listenIpc = (listenerName, eventName, handler) => {
-  ipcMain.handle(`${listenerName}-${eventName}`, (_, args) => handler(...args))
+  ipcMain.handle(`${listenerName}-${eventName}`, async (_, args) =>
+    JSON.stringify(await handler(...JSON.parse(args)))
+  )
 }
 
 export default utls
