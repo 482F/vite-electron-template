@@ -13,5 +13,5 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 contextBridge.exposeInMainWorld('requires', {
-  ipcRenderer,
+  ipcRenderer: { on: ipcRenderer.on, invoke: ipcRenderer.invoke },
 })
