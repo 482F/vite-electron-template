@@ -14,7 +14,7 @@
     "electron:build": "set NODE_ENV=production && electron-builder --win --x64 --dir",
     "electron:macbuild": "set NODE_ENV=production && electron-builder --mac --dir",
     "makedir:dist": "node -e \"require('fs').mkdirSync('./dist', { recursive: true })",
-    "filecopy:preload": "node -e \"require('fs').copyFileSync('./preload.js', './dist/preload.js')\"",
+    "filecopy:preload": "node -e \"require('fs').copyFileSync('./src/main/preload.js', './dist/preload.js')\"",
     "clean": "rimraf dist"
   },
   "main": "dist/background.js",
