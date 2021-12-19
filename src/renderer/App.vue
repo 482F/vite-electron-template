@@ -4,7 +4,8 @@
       <div class="main">
         <titlebar />
         <div class="content">
-          <HelloWorld />
+          <component :is="components[name]"/>
+          <!-- <HelloWorld /> -->
         </div>
       </div>
     </v-main>
@@ -12,8 +13,11 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 import Titlebar from './components/titlebar.vue'
+import HelloWorld from './components/HelloWorld.vue'
+const components = {
+  main: HelloWorld,
+}
 
 export default {
   name: 'App',
@@ -26,6 +30,14 @@ export default {
   data: () => ({
     //
   }),
+  computed: {
+    components() {
+      return components
+    },
+    name() {
+      return location.href.match(/(?<=#).+?$/)[0]
+    }
+  },
 }
 </script>
 
