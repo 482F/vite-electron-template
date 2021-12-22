@@ -153,7 +153,7 @@ export default {
         },
       ]
 
-      await this.$ipcSend('main', 'createWindow', options, menuItems, 'Sub')
+      await this.$sendIpc('main', 'createWindow', options, menuItems, 'Sub')
     },
   },
 }
