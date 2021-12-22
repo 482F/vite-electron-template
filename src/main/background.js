@@ -57,18 +57,17 @@ async function main() {
     toolbar: false,
     hasShadow: false,
   }
-  const menu = new Menu()
-  menu.append(
-    new MenuItem({
+  const menuItems = [
+    {
       label: 'devtool',
       submenu: [
         {
           role: 'toggleDevTools',
         },
       ],
-    })
-  )
-  const win = await utls.createWindow(options, menu, 'Main')
+    },
+  ]
+  const win = await utls.createWindow(options, menuItems, 'Main')
 
   const ipcHandlers = {
     minimize: () => win.minimize(),
