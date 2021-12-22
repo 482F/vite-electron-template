@@ -5,7 +5,6 @@
         <titlebar />
         <div class="content">
           <component :is="components[name]"/>
-          <!-- <HelloWorld /> -->
         </div>
       </div>
     </v-main>
@@ -14,16 +13,15 @@
 
 <script>
 import Titlebar from './components/titlebar.vue'
-import HelloWorld from './components/HelloWorld.vue'
+import Main from './components/main.vue'
 const components = {
-  main: HelloWorld,
+  Main,
 }
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
     Titlebar,
   },
 

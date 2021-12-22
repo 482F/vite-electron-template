@@ -68,7 +68,7 @@ async function main() {
       ],
     })
   )
-  const win = await utls.createWindow(options, menu, 'main')
+  const win = await utls.createWindow(options, menu, 'Main')
 
   const ipcHandlers = {
     minimize: () => win.minimize(),
