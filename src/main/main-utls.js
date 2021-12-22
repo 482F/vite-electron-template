@@ -30,5 +30,8 @@ utls.listenIpc = (listenerName, eventName, handler) => {
     JSON.stringify(await handler(...JSON.parse(args)))
   )
 }
+utls.sendIpc = (win, listenerName, eventName, ...args) => {
+  win.webContents.send(`${listenerName}-${eventName}`, JSON.stringify(args))
+}
 
 export default utls
