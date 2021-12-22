@@ -1,7 +1,5 @@
 import { app, BrowserWindow, ipcMain, Menu, MenuItem } from 'electron'
-import path from 'path'
-
-console.log(process.argv)
+import utls from './main-utls.js'
 
 async function main() {
   // 二重起動の防止
@@ -11,7 +9,6 @@ async function main() {
     return
   }
 
-  const isDevelopment = ('' + process.env.NODE_ENV).trim() === 'development'
 
   const appHandlers = {
     'activate': () => {
@@ -20,7 +17,7 @@ async function main() {
       }
     },
     'ready': async () => {
-      if (isDevelopment && !process.env.IS_TEST) {
+      if (utls.isDevelopment && !process.env.IS_TEST) {
         const installExtension = (await import('electron-devtools-installer'))
           .default
         const VUEJS_DEVTOOLS = (await import('electron-devtools-installer'))
@@ -50,20 +47,16 @@ async function main() {
   )
 
   await new Promise((resolve) => app.on('ready', resolve))
-
-  const win = new BrowserWindow({
+  const options = {
     width: 300,
     height: 300,
     minWidth: 300,
     minHeight: 300,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-    },
     transparent: true,
     frame: false,
     toolbar: false,
     hasShadow: false,
-  })
+  }
   const menu = new Menu()
   menu.append(
     new MenuItem({
@@ -75,17 +68,7 @@ async function main() {
       ],
     })
   )
-  win.setMenu(null)
-  Menu.setApplicationMenu(menu)
-
-  if (isDevelopment) {
-    // Load the url of the dev server if in development mode
-    await win.loadURL('http://localhost:3000/')
-    if (!process.env.IS_TEST) win.webContents.openDevTools()
-  } else {
-    // Load the index.html when not in development
-    win.loadURL('file://' + __dirname + '/index.html')
-  }
+  const win = await utls.createWindow(options, menu, 'main')
 
   const ipcHandlers = {
     minimize: () => win.minimize(),
@@ -96,7 +79,7 @@ async function main() {
   )
 
   // Exit cleanly on request from parent process in development mode.
-  if (isDevelopment) {
+  if (utls.isDevelopment) {
     if (process.platform === 'win32') {
       process.on('message', (data) => {
         if (data === 'graceful-exit') {
