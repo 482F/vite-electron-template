@@ -71,7 +71,6 @@ async function main() {
       submenu: [
         {
           role: 'toggleDevTools',
-          accelarator: 'Ctrl+Shift+I',
         },
       ],
     })
