@@ -2,7 +2,8 @@
   <v-container>
     <v-row class="text-center">
       <v-col cols="12">
-        <v-btn @click="openSubWindow">aaa</v-btn>
+        <v-btn @click="openSubWindow">サブウィンドウを開く</v-btn>
+        <v-btn @click="sendToSubWinwod">サブウィンドウへメッセージを送る</v-btn>
       </v-col>
       <v-col cols="12">
         <v-img :src="logo" class="my-3" contain height="200" />
@@ -155,6 +156,9 @@ export default {
 
       await this.$sendIpc('main', 'createWindow', options, menuItems, 'Sub')
     },
+    async sendToSubWindow() {
+      await this.$sendIpc('sub', 'test', new Date().getTime())
+    }
   },
 }
 </script>
