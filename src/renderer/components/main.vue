@@ -2,12 +2,10 @@
   <v-container>
     <v-row class="text-center">
       <v-col cols="12">
-        <v-img
-          :src="logo"
-          class="my-3"
-          contain
-          height="200"
-        />
+        <v-btn @click="openSubWindow">aaa</v-btn>
+      </v-col>
+      <v-col cols="12">
+        <v-img :src="logo" class="my-3" contain height="200" />
       </v-col>
 
       <v-col class="mb-4">
@@ -15,25 +13,19 @@
           <div>Welcome to the Vuetify 3 Alpha</div>
         </h1>
 
-          <small>Vite Preview</small>
+        <small>Vite Preview</small>
 
         <p class="subheading font-weight-regular">
           For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a
-            href="https://community.vuetifyjs.com"
-            target="_blank"
-          >Discord Community</a>
+          <br />please join our online
+          <a href="https://community.vuetifyjs.com" target="_blank"
+            >Discord Community</a
+          >
         </p>
       </v-col>
 
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-5">
-          What's next?
-        </h2>
+      <v-col class="mb-5" cols="12">
+        <h2 class="headline font-weight-bold mb-5">What's next?</h2>
 
         <v-row justify="center">
           <a
@@ -48,13 +40,8 @@
         </v-row>
       </v-col>
 
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-5">
-          Important Links
-        </h2>
+      <v-col class="mb-5" cols="12">
+        <h2 class="headline font-weight-bold mb-5">Important Links</h2>
 
         <v-row justify="center">
           <a
@@ -69,13 +56,8 @@
         </v-row>
       </v-col>
 
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-5">
-          Ecosystem
-        </h2>
+      <v-col class="mb-5" cols="12">
+        <h2 class="headline font-weight-bold mb-5">Ecosystem</h2>
 
         <v-row justify="center">
           <a
@@ -148,6 +130,31 @@ export default {
       },
     ],
   }),
+  methods: {
+    async openSubWindow() {
+      const options = {
+        width: 300,
+        height: 300,
+        minWidth: 300,
+        minHeight: 300,
+        transparent: true,
+        frame: false,
+        toolbar: false,
+        hasShadow: false,
+      }
+      const menuItems = [
+        {
+          label: 'devtool',
+          submenu: [
+            {
+              role: 'toggleDevTools',
+            },
+          ],
+        },
+      ]
+
+      await this.$ipcSend('main', 'createWindow', options, menuItems, 'Sub')
+    },
+  },
 }
 </script>
-
