@@ -4,9 +4,11 @@ import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
 import './assets/sass/Cica-Regular.scss'
 
+import Utls from './plugins/utls'
 
 loadFonts()
 
-createApp(App)
-  .use(vuetify)
-  .mount('#app')
+const app = createApp(App)
+app.use(Utls)
+app.use(vuetify)
+app.mount('#app')
