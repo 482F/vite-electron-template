@@ -1,10 +1,10 @@
 <template>
   <div class="title-bar">
     <div class="left">
-      <span>lefttttttttttttttt</span>
+      <span>{{ titleLeft }}</span>
     </div>
     <div class="right">
-      <span>righttttttttttttt</span>
+      <span>{{ titleRight }}</span>
       <div class="maneuver">
         <div class="button" @click="minimize">
           <v-icon>mdi-window-minimize</v-icon>
@@ -20,6 +20,16 @@
 <script>
 export default {
   name: 'titlebar',
+  props: {
+    titleLeft: {
+      type: String,
+      default: 'Left',
+    },
+    titleRight: {
+      type: String,
+      default: 'Right',
+    },
+  },
   methods: {
     minimize() {
       this.$sendIpc('main', 'minimize')

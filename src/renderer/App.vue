@@ -2,9 +2,13 @@
   <v-app>
     <v-main>
       <div class="electron-main">
-        <titlebar />
+        <titlebar :title-left="titleLeft" :title-right="titleRight" />
         <div class="electron-content">
-          <component :is="components[name]" />
+          <component
+            :is="components[name]"
+            v-model:title-left="titleLeft"
+            v-model:title-right="titleRight"
+          />
         </div>
       </div>
     </v-main>
@@ -22,13 +26,12 @@ const components = {
 
 export default {
   name: 'App',
-
   components: {
     Titlebar,
   },
-
   data: () => ({
-    //
+    titleLeft: 'lefttttttttt',
+    titleRight: 'rightttttttt',
   }),
   computed: {
     components() {
