@@ -158,7 +158,7 @@ export default {
     },
     async sendToSubWindow() {
       await this.$sendIpc('sub', 'test', new Date().getTime())
-    }
+    },
   },
 }
 </script>
