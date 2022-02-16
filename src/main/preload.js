@@ -12,6 +12,22 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 })
 
+const sendIpc = async (listenerName, eventName, ...args) => {
+  return JSON.parse(
+    (await ipcRenderer.invoke(
+      `${listenerName}-${eventName}`,
+      JSON.stringify(args)
+    )) ?? null
+  )
+}
+const listenIpc = async (listenerName, eventName, handler) => {
+  ipcRenderer.on(`${listenerName}-${eventName}`, (_, args) =>
+    handler(...JSON.parse(args))
+  )
+  await sendIpc('main', 'listen', listenerName, eventName)
+}
+
 contextBridge.exposeInMainWorld('requires', {
-  ipcRenderer: { on: ipcRenderer.on, invoke: ipcRenderer.invoke },
+  listenIpc,
+  sendIpc,
 })
