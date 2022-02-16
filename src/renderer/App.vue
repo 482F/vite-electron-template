@@ -55,6 +55,9 @@ html {
       display: flex;
       flex-direction: column;
       .electron-content {
+        border-style: none solid solid;
+        border-color: lightgray;
+        border-width: 1px;
         flex-grow: 1;
         overflow: auto;
         &::-webkit-scrollbar-track {
