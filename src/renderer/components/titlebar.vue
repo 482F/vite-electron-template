@@ -43,6 +43,10 @@ export default {
   justify-content: space-between;
   padding-left: 10px;
 
+  .right {
+    flex-shrink: 0;
+  }
+
   .left,
   .right,
   .maneuver,
