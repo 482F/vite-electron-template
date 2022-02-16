@@ -17,7 +17,6 @@ utls.createWindow = async (options, rawMenuItems, hash) => {
   if (utls.isDevelopment) {
     // Load the url of the dev server if in development mode
     await win.loadURL(`http://localhost:3000/#${hash}`)
-    if (!process.env.IS_TEST) win.webContents.openDevTools()
   } else {
     // Load the index.html when not in development
     win.loadURL('file://' + __dirname + `/index.html#${hash}`)
