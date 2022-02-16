@@ -67,10 +67,13 @@ async function main() {
       ],
     },
   ]
-  const win = await utls.createWindow(options, menuItems, 'Main')
+  await utls.createWindow(options, menuItems, 'Main')
 
   const ipcHandlers = {
-    minimize: () => win.minimize(),
+    minimize: ({ sender }) => {
+      const win = sender.getOwnerBrowserWindow()
+      win.minimize()
+    },
     quit: () => app.quit(),
     createWindow: (_, ...args) => utls.createWindow(...args),
     listen: ({ sender }, listenerName, eventName) => {
