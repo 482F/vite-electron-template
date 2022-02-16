@@ -10,7 +10,6 @@ export default {
   },
   mounted() {
     this.$listenIpc('sub', 'test', (time) => {
-      console.log({ time })
       this.received = time
     })
   },

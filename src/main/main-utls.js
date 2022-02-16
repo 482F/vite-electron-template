@@ -24,12 +24,26 @@ utls.createWindow = async (options, rawMenuItems, hash) => {
   return win
 }
 
+const handlers = {}
+ipcMain.handle('sendIpc', async (event, json) => {
+  const [key, args] = JSON.parse(json)
+  const targetHandlers = handlers[key] ?? []
+  for (let i = 0; i < targetHandlers.length; i++) {
+    await targetHandlers[i](event, ...args).catch(
+      () => (targetHandlers[i] = null)
+    )
+  }
+  handlers[key] = targetHandlers.filter(Boolean)
+})
+
 utls.listenIpc = (listenerName, eventName, handler) => {
-  ipcMain.handle(`${listenerName}-${eventName}`, async (event, args) =>
-    JSON.stringify(await handler(event, ...JSON.parse(args)))
-  )
+  handlers[`${listenerName}-${eventName}`] ??= []
+  handlers[`${listenerName}-${eventName}`].push(async (...args) => handler(...args))
 }
 utls.sendIpc = (win, listenerName, eventName, ...args) => {
+  if (win.isDestroyed()) {
+    throw new Error('window has been destroyed')
+  }
   win.webContents.send(`${listenerName}-${eventName}`, JSON.stringify(args))
 }
 
