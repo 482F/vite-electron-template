@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from 'electron'
 import utls from './main-utls.js'
+const path = require('path')
 
 async function main() {
   // 二重起動の防止
@@ -46,10 +47,31 @@ async function main() {
     app.on(eventName, handler)
   )
 
+  const Store = require('electron-store')
+  const store = new Store({
+    cwd: path.dirname(app.getPath('exe')),
+    defaults: {
+      position: {
+        x: 500,
+        y: 500,
+      },
+      size: {
+        width: 300,
+        height: 300,
+      },
+      text: 'abc',
+    },
+  })
+
   await new Promise((resolve) => app.on('ready', resolve))
+
+  const position = store.get('position')
+  const size = store.get('size')
   const options = {
-    width: 300,
-    height: 300,
+    x: position.x,
+    y: position.y,
+    width: size.width,
+    height: size.height,
     minWidth: 300,
     minHeight: 300,
     transparent: true,
@@ -75,8 +97,13 @@ async function main() {
     },
     quit: () => app.quit(),
     createWindow: (_, ...args) => utls.createWindow(...args),
-    pleaseText: () => {
-      return 'abc'
+    getStore: (_, key) => store.get(key),
+    setStore: (_, key, value) => {
+      if (value === undefined) {
+        store.set(key)
+      } else {
+        store.set(key, value)
+      }
     },
     listen: ({ sender }, listenerName, eventName) => {
       const win = sender.getOwnerBrowserWindow()
@@ -90,6 +117,20 @@ async function main() {
   )
 
   const mainWin = await utls.createWindow(options, menuItems, 'Main')
+  mainWin.on('close', () => {
+    const position = mainWin.getPosition()
+    const size = mainWin.getSize()
+    store.set({
+      position: {
+        x: position[0],
+        y: position[1],
+      },
+      size: {
+        width: size[0],
+        height: size[1],
+      },
+    })
+  })
 
   // Exit cleanly on request from parent process in development mode.
   if (utls.isDevelopment) {
