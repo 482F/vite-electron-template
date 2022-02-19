@@ -1,9 +1,9 @@
 <template>
   <v-app>
     <v-main>
-      <div class="main">
+      <div class="electron-main">
         <titlebar />
-        <div class="content">
+        <div class="electron-content">
           <component :is="components[name]"/>
         </div>
       </div>
@@ -44,13 +44,13 @@ export default {
 <style lang="scss">
 html {
   overflow: hidden !important;
-  .main {
+  .electron-main {
     height: 100vh;
     width: 100vw;
     font-family: Cica;
     display: flex;
     flex-direction: column;
-    .content {
+    .electron-content {
       flex-grow: 1;
       overflow: auto;
       &::-webkit-scrollbar-track {
