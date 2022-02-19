@@ -67,7 +67,6 @@ async function main() {
       ],
     },
   ]
-  await utls.createWindow(options, menuItems, 'Main')
 
   const ipcHandlers = {
     minimize: ({ sender }) => {
@@ -86,6 +85,8 @@ async function main() {
   Object.entries(ipcHandlers).forEach(([eventName, handler]) =>
     utls.listenIpc('main', eventName, handler)
   )
+
+  const mainWin = await utls.createWindow(options, menuItems, 'Main')
 
   // Exit cleanly on request from parent process in development mode.
   if (utls.isDevelopment) {

@@ -28,17 +28,23 @@ const handlers = {}
 ipcMain.handle('sendIpc', async (event, json) => {
   const [key, args] = JSON.parse(json)
   const targetHandlers = handlers[key] ?? []
+  const results = []
   for (let i = 0; i < targetHandlers.length; i++) {
-    await targetHandlers[i](event, ...args).catch(
-      () => (targetHandlers[i] = null)
+    results.push(
+      await targetHandlers[i](event, ...args).catch(
+        () => (targetHandlers[i] = null)
+      )
     )
   }
   handlers[key] = targetHandlers.filter(Boolean)
+  return JSON.stringify(results)
 })
 
 utls.listenIpc = (listenerName, eventName, handler) => {
   handlers[`${listenerName}-${eventName}`] ??= []
-  handlers[`${listenerName}-${eventName}`].push(async (...args) => handler(...args))
+  handlers[`${listenerName}-${eventName}`].push(async (...args) =>
+    handler(...args)
+  )
 }
 utls.sendIpc = (win, listenerName, eventName, ...args) => {
   if (win.isDestroyed()) {
