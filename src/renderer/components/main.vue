@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="main">
     <v-row class="text-center">
       <v-col cols="12">
         <v-btn @click="openSubWindow">サブウィンドウを開く</v-btn>
@@ -162,3 +162,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.main {
+  background-color: #ffffffcc;
+}
+</style>

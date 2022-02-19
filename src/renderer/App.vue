@@ -44,32 +44,38 @@ export default {
 <style lang="scss">
 html {
   overflow: hidden !important;
-  .v-main__wrap {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .electron-main {
-      height: calc(100vh - 4px);
-      width: calc(100vw - 4px);
-      font-family: Cica;
-      display: flex;
-      flex-direction: column;
-      .electron-content {
-        border-style: none solid solid;
-        border-color: lightgray;
-        border-width: 1px;
-        flex-grow: 1;
-        overflow: auto;
-        &::-webkit-scrollbar-track {
-          background-color: #eee;
-        }
-        &::-webkit-scrollbar {
-          width: 10px;
-          height: 10px;
-        }
-        &::-webkit-scrollbar-thumb {
-          background-color: #ccc;
-          border-radius: 30px;
+  > body {
+    background-color: #ffffff00;
+    .v-application {
+      background-color: #ffffff00;
+      .v-main__wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .electron-main {
+          height: calc(100vh - 4px);
+          width: calc(100vw - 4px);
+          font-family: Cica;
+          display: flex;
+          flex-direction: column;
+          .electron-content {
+            border-style: none solid solid;
+            border-color: lightgray;
+            border-width: 1px;
+            flex-grow: 1;
+            overflow: auto;
+            &::-webkit-scrollbar-track {
+              background-color: #eee;
+            }
+            &::-webkit-scrollbar {
+              width: 10px;
+              height: 10px;
+            }
+            &::-webkit-scrollbar-thumb {
+              background-color: #ccc;
+              border-radius: 30px;
+            }
+          }
         }
       }
     }
