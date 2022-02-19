@@ -75,6 +75,9 @@ async function main() {
     },
     quit: () => app.quit(),
     createWindow: (_, ...args) => utls.createWindow(...args),
+    pleaseText: () => {
+      return 'abc'
+    },
     listen: ({ sender }, listenerName, eventName) => {
       const win = sender.getOwnerBrowserWindow()
       return utls.listenIpc(listenerName, eventName, (_, ...args) => {

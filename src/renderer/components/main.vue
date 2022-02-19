@@ -4,6 +4,7 @@
       <v-col cols="12">
         <v-btn @click="openSubWindow">サブウィンドウを開く</v-btn>
         <v-btn @click="sendToSubWindow">サブウィンドウへメッセージを送る</v-btn>
+        <v-text-field v-model="text" />
       </v-col>
       <v-col cols="12">
         <v-img :src="logo" class="my-3" contain height="200" />
@@ -80,9 +81,9 @@
 import logo from '../assets/logo.svg'
 
 export default {
-  name: 'HelloWorld',
-
+  name: 'main',
   data: () => ({
+    text: '',
     ecosystem: [
       {
         text: 'vuetify-loader',
@@ -131,6 +132,9 @@ export default {
       },
     ],
   }),
+  async mounted() {
+    this.text = (await this.$sendIpc('main', 'pleaseText'))[0]
+  },
   methods: {
     async openSubWindow() {
       const options = {
