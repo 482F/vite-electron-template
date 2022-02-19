@@ -72,11 +72,13 @@ async function main() {
   const ipcHandlers = {
     minimize: () => win.minimize(),
     quit: () => app.quit(),
-    createWindow: utls.createWindow,
-    listen: (listenerName, eventName) =>
-      utls.listenIpc(listenerName, eventName, (...args) =>
-        utls.sendIpc(listenerName, eventName, args)
-      ),
+    createWindow: (_, ...args) => utls.createWindow(...args),
+    listen: ({ sender }, listenerName, eventName) => {
+      const win = sender.getOwnerBrowserWindow()
+      return utls.listenIpc(listenerName, eventName, (_, ...args) => {
+        return utls.sendIpc(win, listenerName, eventName, ...args)
+      })
+    },
   }
   Object.entries(ipcHandlers).forEach(([eventName, handler]) =>
     utls.listenIpc('main', eventName, handler)
