@@ -133,7 +133,14 @@ export default {
     ],
   }),
   async mounted() {
-    this.text = (await this.$sendIpc('main', 'pleaseText'))[0]
+    this.text = (await this.$sendIpc('main', 'getStore', 'text'))[0]
+  },
+  watch: {
+    async text(newText) {
+      await this.$sendIpc('main', 'setStore', {
+        text: this.text,
+      })
+    },
   },
   methods: {
     async openSubWindow() {
