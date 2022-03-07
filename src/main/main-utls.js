@@ -5,7 +5,7 @@ const utls = {}
 utls.isDevelopment = ('' + process.env.NODE_ENV).trim() === 'development'
 utls.createWindow = async (options, rawMenuItems, hash) => {
   options.webPreferences ??= {}
-  options.webPreferences.preload = path.join(__dirname, 'preload.js')
+  options.webPreferences.preload = path.join(__dirname, 'preload/index.js')
   const win = new BrowserWindow(options)
   const menuItems = rawMenuItems.map((rawMenuItem) => new MenuItem(rawMenuItem))
   const menu = new Menu()

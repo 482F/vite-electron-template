@@ -27,7 +27,13 @@ const listenIpc = async (listenerName, eventName, handler) => {
   await sendIpc('main', 'listen', listenerName, eventName)
 }
 
-contextBridge.exposeInMainWorld('requires', {
-  listenIpc,
-  sendIpc,
-})
+const passObject = {
+  requires: {
+    listenIpc,
+    sendIpc,
+  },
+}
+
+Object.entries(passObject).forEach(([apiKey, api]) =>
+  contextBridge.exposeInMainWorld(apiKey, api)
+)
