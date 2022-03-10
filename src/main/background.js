@@ -2,6 +2,8 @@ import { app, BrowserWindow } from 'electron'
 import utls from './main-utls.js'
 const path = require('path')
 
+console.log(process.argv)
+
 async function main() {
   // 二重起動の防止
   const gotTheLock = app.requestSingleInstanceLock()
