@@ -49,6 +49,9 @@
     "productName": "vite-electron-template",
     "files": [
       "dist/**/*"
-    ]
+    ],
+    "win": {
+      "icon": "public/icon.png"
+    }
   }
 }
