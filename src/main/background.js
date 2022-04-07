@@ -71,6 +71,7 @@ async function main() {
     minWidth: 300,
     minHeight: 300,
     transparent: true,
+    // transparent: false, // で最大化ができるようになる
     frame: false,
     toolbar: false,
     hasShadow: false,
