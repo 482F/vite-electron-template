@@ -67,6 +67,8 @@ html {
             border-width: 1px;
             flex-grow: 1;
             overflow: auto;
+          }
+          * {
             &::-webkit-scrollbar-track {
               background-color: #eee;
             }
