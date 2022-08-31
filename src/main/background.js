@@ -5,7 +5,7 @@ import { app, BrowserWindow } from 'electron'
 import utls from './main-utls.js'
 const path = require('path')
 const { spawn } = require('child_process')
-const wwutilPromise = require('windows-window-util').then((m) => m.default)
+const wwutil = require('windows-window-util')
 
 async function main() {
   // 二重起動の防止
@@ -119,7 +119,6 @@ async function main() {
       })
     },
     getAllWindows: async () => {
-      const wwutil = await wwutilPromise
       return await wwutil.getAllWindows()
     },
     getFileIcon: (() => {

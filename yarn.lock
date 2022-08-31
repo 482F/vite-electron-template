@@ -7603,7 +7603,7 @@ wildcard@^2.0.0:
 
 "windows-window-util@https://github.com/482F/windows-window-util.git":
   version "1.0.0"
-  resolved "https://github.com/482F/windows-window-util.git#8663b630045db18520b7d366e0967ccb55458921"
+  resolved "https://github.com/482F/windows-window-util.git#939ebbecbe16ff7d2814f3353a5c3030784ebdab"
   dependencies:
     ffi-napi "^4.0.3"
     ref-napi "^3.0.3"
