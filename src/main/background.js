@@ -138,7 +138,7 @@ async function main() {
       args.push(pid)
 
       // resume は二回する
-      for (let i = 0; i < value ? 1 : 2; i++) {
+      for (let i = 0; i < (value ? 1 : 2); i++) {
         await spawn('pssuspend.exe', args)
       }
     },

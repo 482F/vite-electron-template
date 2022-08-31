@@ -45,7 +45,7 @@ html {
     background-color: #ffffff00;
     .v-application {
       background-color: #ffffff00;
-      .v-main__wrap {
+      .v-main {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -63,11 +63,11 @@ html {
           }
           * {
             &::-webkit-scrollbar-track {
-              background-color: #eee;
+              background-color: #eee !important;
             }
             &::-webkit-scrollbar {
-              width: 10px;
-              height: 10px;
+              width: 10px !important;
+              height: 10px !important;
             }
             &::-webkit-scrollbar-thumb {
               background-color: #ccc;
