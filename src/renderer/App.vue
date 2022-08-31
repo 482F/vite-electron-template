@@ -2,13 +2,9 @@
   <v-app>
     <v-main>
       <div class="electron-main">
-        <titlebar :title-left="titleLeft" :title-right="titleRight" />
+        <titlebar title-left="pssuspender" title-right="" />
         <div class="electron-content">
-          <component
-            :is="components[name]"
-            v-model:title-left="titleLeft"
-            v-model:title-right="titleRight"
-          />
+          <component :is="components[name]" />
         </div>
       </div>
     </v-main>
@@ -29,10 +25,7 @@ export default {
   components: {
     Titlebar,
   },
-  data: () => ({
-    titleLeft: 'lefttttttttt',
-    titleRight: 'rightttttttt',
-  }),
+  data: () => ({}),
   computed: {
     components() {
       return components
@@ -46,6 +39,7 @@ export default {
 
 <style lang="scss">
 html {
+  font-family: Cica !important;
   overflow: hidden !important;
   > body {
     background-color: #ffffff00;
@@ -58,7 +52,6 @@ html {
         .electron-main {
           height: 100vh;
           width: 100vw;
-          font-family: Cica;
           display: flex;
           flex-direction: column;
           .electron-content {
