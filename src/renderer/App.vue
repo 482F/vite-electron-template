@@ -56,8 +56,8 @@ html {
         justify-content: center;
         align-items: center;
         .electron-main {
-          height: calc(100vh - 4px);
-          width: calc(100vw - 4px);
+          height: 100vh;
+          width: 100vw;
           font-family: Cica;
           display: flex;
           flex-direction: column;
