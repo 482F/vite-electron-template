@@ -49,7 +49,7 @@ export default {
   computed: {
     blacklistFuncs() {
       return this.blacklist
-        .split('\n')
+        ?.split('\n')
         .filter(Boolean)
         .map((line) => {
           const [target, pattern] = (() => {
@@ -73,7 +73,7 @@ export default {
             path: pathFunc,
             title: titleFunc,
           }
-        })
+        }) ?? []
     },
     visibleProcesses() {
       return Object.values(this.processes)
