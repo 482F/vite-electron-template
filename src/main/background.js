@@ -4,6 +4,7 @@
 import { app, BrowserWindow } from 'electron'
 import utls from './main-utls.js'
 const path = require('path')
+const { spawn } = require('child_process')
 const wwutilPromise = require('windows-window-util').then((m) => m.default)
 
 async function main() {
@@ -117,9 +118,29 @@ async function main() {
         return utls.sendIpc(win, listenerName, eventName, ...args)
       })
     },
-    windows: async (win, funcName, ...args) => {
+    getAllWindows: async () => {
       const wwutil = await wwutilPromise
-      return await wwutil[funcName](...args)
+      return await wwutil.getAllWindows()
+    },
+    getFileIcon: (() => {
+      const iconMap = {}
+      return async (win, targetPath) => {
+        iconMap[targetPath] ??= await app.getFileIcon(targetPath)
+        const image = await app.getFileIcon(targetPath)
+        return image.toDataURL()
+      }
+    })(),
+    changeSuspend: async (win, pid, value) => {
+      const args = []
+      if (!value) {
+        args.push('-r')
+      }
+      args.push(pid)
+
+      // resume は二回する
+      for (let i = 0; i < value ? 1 : 2; i++) {
+        await spawn('pssuspend.exe', args)
+      }
     },
   }
   Object.entries(ipcHandlers).forEach(([eventName, handler]) =>

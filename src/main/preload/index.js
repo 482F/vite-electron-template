@@ -1,4 +1,4 @@
-const { contextBridge, ipcRenderer } = require('electron')
+const { contextBridge, ipcRenderer, remote } = require('electron')
 
 window.addEventListener('DOMContentLoaded', () => {
   //
@@ -26,6 +26,8 @@ const listenIpc = async (listenerName, eventName, handler) => {
   )
   await sendIpc('main', 'listen', listenerName, eventName)
 }
+
+console.log({el: require('electron')})
 
 const passObject = {
   requires: {
