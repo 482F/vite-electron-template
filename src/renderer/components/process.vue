@@ -65,6 +65,7 @@ export default {
     width: var(--height);
   }
   > .icon > img {
+    user-select: none;
     height: var(--height);
     width: var(--height);
   }
