@@ -2,12 +2,27 @@
   <div class="main">
     <div class="header">
       <v-icon @click="reload">mdi-reload</v-icon>
+      <v-btn
+        @click="showBlacklist = !showBlacklist"
+        variant="outlined"
+        size="small"
+      >
+        blacklist
+      </v-btn>
     </div>
+    <v-textarea
+      class="textarea"
+      v-model="blacklist"
+      v-show="showBlacklist"
+      variant="outlined"
+      @change="updateBlacklist"
+    />
     <process
       class="process"
-      v-for="process of processes"
+      v-for="process of visibleProcesses"
       :process="process"
       :suspended="process.suspended"
+      :blacklist="blacklist"
       @update:suspended="(value) => updateSuspended(process, value)"
     />
   </div>
@@ -96,6 +111,9 @@ export default {
         this.processes[window.pid].windows.push(window)
       }
     },
+    async updateBlacklist(value) {
+      await this.$sendIpc('main', 'setStore', 'blacklist', this.blacklist)
+    },
     async updateSuspended(process, value) {
       this.processes[process.pid].suspended = value
       await this.$sendIpc(
@@ -111,13 +129,25 @@ export default {
 
 <style lang="scss" scoped>
 .main {
-  margin: 1rem;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 1rem;
+  padding-top: 0;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  > table {
-    width: 100%;
-    table-layout: fixed;
+  > .header {
+    padding: 1rem 0 1rem;
+    z-index: 1;
+    background-color: white;
+    top: 0;
+    position: sticky;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  > .textarea {
+    flex-grow: 0;
   }
 }
 </style>
