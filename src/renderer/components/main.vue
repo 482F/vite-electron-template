@@ -144,28 +144,8 @@ export default {
   },
   methods: {
     async openSubWindow() {
-      const options = {
-        width: 300,
-        height: 300,
-        minWidth: 300,
-        minHeight: 300,
-        transparent: true,
-        frame: false,
-        toolbar: false,
-        hasShadow: false,
-      }
-      const menuItems = [
-        {
-          label: 'devtool',
-          submenu: [
-            {
-              role: 'toggleDevTools',
-            },
-          ],
-        },
-      ]
-
-      await this.$sendIpc('main', 'createWindow', options, menuItems, 'Sub')
+      console.log((...args) => this.$sendIpc(...args))
+      console.log(await this.$sendIpc('main', 'windows', 'getAllWindows'))
     },
     async sendToSubWindow() {
       await this.$sendIpc('sub', 'test', new Date().getTime())

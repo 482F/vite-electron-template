@@ -1,6 +1,10 @@
+/*
+  IMPORTANT: なぜか一度 yarn build した後に yarn serve しないと失敗する
+*/
 import { app, BrowserWindow } from 'electron'
 import utls from './main-utls.js'
 const path = require('path')
+const wwutilPromise = require('windows-window-util').then((m) => m.default)
 
 async function main() {
   // 二重起動の防止
@@ -53,7 +57,6 @@ async function main() {
         width: 300,
         height: 300,
       },
-      text: 'abc',
     },
   })
 
@@ -72,8 +75,7 @@ async function main() {
     height: size.height,
     minWidth: 300,
     minHeight: 300,
-    transparent: true,
-    // transparent: false, // で最大化ができるようになる
+    transparent: false,
     frame: false,
     toolbar: false,
     hasShadow: false,
@@ -115,6 +117,10 @@ async function main() {
         return utls.sendIpc(win, listenerName, eventName, ...args)
       })
     },
+    windows: async (win, funcName, ...args) => {
+      const wwutil = await wwutilPromise
+      return await wwutil[funcName](...args)
+    },
   }
   Object.entries(ipcHandlers).forEach(([eventName, handler]) =>
     utls.listenIpc('main', eventName, handler)
@@ -127,7 +133,6 @@ async function main() {
   } else if (minimized) {
     mainWin.minimize()
   }
-
 
   mainWin.on('resized', () => {
     if (mainWin.isMaximized()) {
@@ -184,4 +189,3 @@ async function main() {
 }
 
 main()
-
